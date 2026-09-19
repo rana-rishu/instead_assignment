@@ -1,0 +1,342 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://instead.com/schemas/tax-form-annotation-v1.json",
+  "title": "Instead Tax Form Annotation Specification",
+  "description": "Enterprise-grade specification schema for visual coordinate mapping, typography formatting, comb/segmented cell alignment, and deeply nested JSONPath data binding for U.S. Federal and State Tax Forms.",
+  "type": "object",
+  "required": [
+    "specVersion",
+    "formId",
+    "formTitle",
+    "taxYear",
+    "revision",
+    "pages",
+    "fields"
+  ],
+  "properties": {
+    "$schema": { "type": "string" },
+    "specVersion": {
+      "type": "string",
+      "enum": ["1.0.0", "1.1.0"],
+      "description": "Specification semantic version"
+    },
+    "formId": {
+      "type": "string",
+      "description": "Unique IRS or State form identifier (e.g. IRS-FORM-1040, IRS-W2, IRS-SCHEDULE-C)"
+    },
+    "formTitle": {
+      "type": "string",
+      "description": "Official title of the tax form"
+    },
+    "taxYear": {
+      "type": "integer",
+      "minimum": 1900,
+      "maximum": 2100
+    },
+    "revision": {
+      "type": "string",
+      "description": "Form revision code/timestamp from IRS"
+    },
+    "publisher": {
+      "type": "string",
+      "default": "Internal Revenue Service (IRS)"
+    },
+    "description": { "type": "string" },
+    "pages": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["pageIndex", "width", "height", "unit", "origin"],
+        "properties": {
+          "pageIndex": { "type": "integer", "minimum": 1 },
+          "width": { "type": "number", "default": 612 },
+          "height": { "type": "number", "default": 792 },
+          "unit": {
+            "type": "string",
+            "enum": ["pt", "mm", "in", "px", "percentage"],
+            "default": "pt"
+          },
+          "dpi": { "type": "integer", "default": 72 },
+          "origin": {
+            "type": "string",
+            "enum": ["top-left", "bottom-left"],
+            "default": "top-left"
+          },
+          "backgroundSvg": { "type": "string" },
+          "backgroundImageUrl": { "type": "string" },
+          "title": { "type": "string" }
+        }
+      }
+    },
+    "fields": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/FormFieldAnnotation"
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "author": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "standard": { "type": "string" },
+        "compatibleEngines": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "FormFieldAnnotation": {
+      "type": "object",
+      "required": [
+        "id",
+        "boxNumber",
+        "label",
+        "pageIndex",
+        "category",
+        "fieldType",
+        "bounds"
+      ],
+      "properties": {
+        "id": { "type": "string" },
+        "boxNumber": { "type": "string" },
+        "label": { "type": "string" },
+        "description": { "type": "string" },
+        "pageIndex": { "type": "integer", "minimum": 1 },
+        "category": {
+          "type": "string",
+          "enum": [
+            "IDENTITY",
+            "FILING_STATUS",
+            "INCOME",
+            "ADJUSTMENTS",
+            "DEDUCTIONS",
+            "TAX_AND_CREDITS",
+            "PAYMENTS",
+            "REFUND",
+            "SIGNATURE",
+            "PREPARER",
+            "OTHER"
+          ]
+        },
+        "fieldType": {
+          "type": "string",
+          "enum": [
+            "TEXT",
+            "CURRENCY",
+            "COMB_TEXT",
+            "CHECKBOX",
+            "RADIO_GROUP",
+            "DATE",
+            "SSN",
+            "EIN",
+            "PHONE",
+            "BARCODE"
+          ]
+        },
+        "bounds": {
+          "type": "object",
+          "required": ["x", "y", "width", "height"],
+          "properties": {
+            "x": { "type": "number" },
+            "y": { "type": "number" },
+            "width": { "type": "number", "minimum": 0 },
+            "height": { "type": "number", "minimum": 0 },
+            "unit": {
+              "type": "string",
+              "enum": ["pt", "mm", "in", "px", "percentage"],
+              "default": "pt"
+            }
+          }
+        },
+        "dataBinding": {
+          "type": "object",
+          "required": ["path"],
+          "properties": {
+            "path": {
+              "type": "string",
+              "description": "JSONPath expression to extract value from nested dataset, e.g. $.taxpayer.personalInfo.ssn"
+            },
+            "fallback": { "type": "string" },
+            "transform": {
+              "type": "string",
+              "enum": [
+                "NONE",
+                "UPPERCASE",
+                "LOWERCASE",
+                "TITLE_CASE",
+                "SSN_HYPHENATED",
+                "SSN_UNMASKED_DIGITS",
+                "SSN_MASKED_FIRST_FIVE",
+                "EIN_HYPHENATED",
+                "CURRENCY_NO_CENTS",
+                "CURRENCY_WITH_CENTS",
+                "CURRENCY_ROUND_NEAREST_DOLLAR",
+                "DATE_MMDDYYYY",
+                "DATE_YYYYMMDD",
+                "PHONE_US",
+                "BOOLEAN_TO_X",
+                "BOOLEAN_TO_CHECK",
+                "BOOLEAN_TO_FILLED_BOX",
+                "EXTRACT_YEAR",
+                "CUSTOM_EXPRESSION"
+              ],
+              "default": "NONE"
+            },
+            "condition": { "type": "string" },
+            "customExpression": { "type": "string" }
+          }
+        },
+        "formatting": {
+          "type": "object",
+          "properties": {
+            "fontFamily": { "type": "string", "default": "Courier" },
+            "fontSize": { "type": "number", "default": 10 },
+            "minFontSize": { "type": "number", "default": 6 },
+            "fontWeight": { "type": ["string", "number"], "default": "normal" },
+            "fontStyle": { "type": "string", "enum": ["normal", "italic"], "default": "normal" },
+            "color": { "type": "string", "default": "#000000" },
+            "align": {
+              "type": "string",
+              "enum": ["left", "center", "right", "justify"],
+              "default": "left"
+            },
+            "verticalAlign": {
+              "type": "string",
+              "enum": ["top", "middle", "bottom"],
+              "default": "middle"
+            },
+            "lineHeight": { "type": "number" },
+            "letterSpacing": { "type": "number" },
+            "overflowStrategy": {
+              "type": "string",
+              "enum": ["shrink_to_fit", "clip", "wrap", "ellipsis"],
+              "default": "shrink_to_fit"
+            },
+            "textCase": {
+              "type": "string",
+              "enum": ["none", "upper", "lower"],
+              "default": "none"
+            }
+          }
+        },
+        "combConfig": {
+          "type": "object",
+          "required": ["cellCount", "cellWidth"],
+          "properties": {
+            "cellCount": { "type": "integer", "minimum": 1 },
+            "cellWidth": { "type": "number", "minimum": 1 },
+            "cellGap": { "type": "number", "default": 0 },
+            "groups": {
+              "type": "array",
+              "items": { "type": "integer" }
+            },
+            "groupGaps": {
+              "type": "array",
+              "items": { "type": "number" }
+            },
+            "delimiter": { "type": "string" },
+            "autoPad": {
+              "type": "string",
+              "enum": ["left", "right", "none"],
+              "default": "none"
+            },
+            "padChar": { "type": "string", "default": " " },
+            "characterAlignment": {
+              "type": "string",
+              "enum": ["center", "left", "right"],
+              "default": "center"
+            }
+          }
+        },
+        "currencyConfig": {
+          "type": "object",
+          "properties": {
+            "includeSymbol": { "type": "boolean", "default": false },
+            "includeDecimals": { "type": "boolean", "default": false },
+            "thousandsSeparator": { "type": "string", "default": "," },
+            "decimalSeparator": { "type": "string", "default": "." },
+            "negativeFormat": {
+              "type": "string",
+              "enum": ["PARENTHESES", "MINUS", "TRAILING_MINUS"],
+              "default": "PARENTHESES"
+            },
+            "zeroDisplay": {
+              "type": "string",
+              "enum": ["ZERO", "DASH", "BLANK"],
+              "default": "BLANK"
+            },
+            "centsBoxOffset": { "type": "number" }
+          }
+        },
+        "checkboxConfig": {
+          "type": "object",
+          "required": ["marker"],
+          "properties": {
+            "marker": {
+              "type": "string",
+              "enum": ["X", "CHECK", "FILLED", "CIRCLE", "DOT"],
+              "default": "X"
+            },
+            "markerSize": { "type": "number", "default": 10 },
+            "checkedValues": {
+              "type": "array",
+              "items": { "type": ["string", "number", "boolean"] }
+            },
+            "radioValue": { "type": "string" }
+          }
+        },
+        "tableRepeatConfig": {
+          "type": "object",
+          "required": ["arrayPath", "maxRows", "rowHeight", "columns"],
+          "properties": {
+            "arrayPath": { "type": "string" },
+            "maxRows": { "type": "integer", "minimum": 1 },
+            "rowHeight": { "type": "number", "minimum": 1 },
+            "columns": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["columnKey", "xOffset", "width"],
+                "properties": {
+                  "columnKey": { "type": "string" },
+                  "label": { "type": "string" },
+                  "xOffset": { "type": "number" },
+                  "width": { "type": "number" },
+                  "field": { "type": "object" }
+                }
+              }
+            }
+          }
+        },
+        "validation": {
+          "type": "object",
+          "properties": {
+            "required": { "type": "boolean" },
+            "regex": { "type": "string" },
+            "min": { "type": "number" },
+            "max": { "type": "number" },
+            "customRule": { "type": "string" },
+            "errorMessage": { "type": "string" }
+          }
+        },
+        "audit": {
+          "type": "object",
+          "properties": {
+            "irsFormRef": { "type": "string" },
+            "xmlMefTag": { "type": "string" },
+            "notes": { "type": "string" },
+            "taxLawReference": { "type": "string" }
+          }
+        },
+        "zIndex": { "type": "integer", "default": 0 },
+        "locked": { "type": "boolean", "default": false },
+        "hidden": { "type": "boolean", "default": false }
+      }
+    }
+  }
+}

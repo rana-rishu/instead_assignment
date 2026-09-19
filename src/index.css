@@ -1,0 +1,106 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Cal Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/calsans/v2/fdN99sWUv3gWqXxqqRBctFs.woff2') format('woff2');
+}
+
+@layer base {
+  body {
+    background-color: #000000;
+    color: #f4f4f5;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    letter-spacing: -0.011em;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* Cal.com Distinct Dot Grid Canvas Background */
+.cal-bg-grid {
+  background-color: #09090b !important;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.16) 1.2px, transparent 1.2px) !important;
+  background-size: 24px 24px !important;
+}
+
+/* Cal.com Canvas Studio Workspace with Distinct Grid */
+.bg-studio-workspace {
+  background-color: #08080a;
+  background-image: 
+    radial-gradient(rgba(255, 255, 255, 0.15) 1.2px, transparent 1.2px),
+    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 24px 24px, 96px 96px, 96px 96px;
+}
+
+/* Cal.com Signature Bento Card */
+.cal-card {
+  background-color: #121215;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.08), 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+  border-radius: 0.75rem;
+}
+
+.cal-border {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Cal.com Top Ambient Light Aura */
+.cal-spotlight {
+  position: relative;
+}
+.cal-spotlight::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1100px;
+  height: 320px;
+  background: radial-gradient(ellipse 70% 50% at 50% -10%, rgba(255, 255, 255, 0.07), transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Crisp Clean Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Print CSS */
+@media print {
+  body {
+    background: transparent !important;
+    color: black !important;
+  }
+  header, aside, .no-print, [role="dialog"], .cal-spotlight::before {
+    display: none !important;
+  }
+}

@@ -1,0 +1,254 @@
+{
+  "$schema": "https://instead.com/schemas/tax-form-annotation-v1.json",
+  "specVersion": "1.0.0",
+  "formId": "IRS-FORM-W2",
+  "formTitle": "Form W-2: Wage and Tax Statement",
+  "taxYear": 2024,
+  "revision": "2024-Rev-01",
+  "publisher": "Internal Revenue Service (IRS)",
+  "description": "Standard Wage and Tax Statement for employer reporting of employee earnings and tax withholdings.",
+  "pages": [
+    {
+      "pageIndex": 1,
+      "width": 612,
+      "height": 792,
+      "unit": "pt",
+      "dpi": 72,
+      "origin": "top-left",
+      "title": "Copy B - To Be Filed With Employee's FEDERAL Tax Return"
+    }
+  ],
+  "fields": [
+    {
+      "id": "w2_box_a_ssn",
+      "boxNumber": "Box a",
+      "label": "Employee's social security number",
+      "pageIndex": 1,
+      "category": "IDENTITY",
+      "fieldType": "COMB_TEXT",
+      "bounds": { "x": 48, "y": 92, "width": 180, "height": 16 },
+      "dataBinding": {
+        "path": "$.income.w2Forms[0].employeeSsn",
+        "transform": "SSN_HYPHENATED"
+      },
+      "formatting": { "fontFamily": "Courier", "fontSize": 11, "fontWeight": "bold" },
+      "combConfig": {
+        "cellCount": 9,
+        "cellWidth": 11.5,
+        "cellGap": 1.5,
+        "groups": [3, 2, 4],
+        "groupGaps": [8.0, 8.0],
+        "delimiter": "-"
+      }
+    },
+    {
+      "id": "w2_box_b_ein",
+      "boxNumber": "Box b",
+      "label": "Employer identification number (EIN)",
+      "pageIndex": 1,
+      "category": "IDENTITY",
+      "fieldType": "COMB_TEXT",
+      "bounds": { "x": 48, "y": 140, "width": 180, "height": 16 },
+      "dataBinding": {
+        "path": "$.income.w2Forms[0].employer.ein",
+        "transform": "NONE"
+      },
+      "formatting": { "fontFamily": "Courier", "fontSize": 11, "fontWeight": "bold" }
+    },
+    {
+      "id": "w2_box_c_emp_name_addr",
+      "boxNumber": "Box c",
+      "label": "Employer's name, address, and ZIP code",
+      "pageIndex": 1,
+      "category": "IDENTITY",
+      "fieldType": "TEXT",
+      "bounds": { "x": 48, "y": 185, "width": 250, "height": 45 },
+      "dataBinding": {
+        "path": "$.income.w2Forms[0].employer.name",
+        "transform": "UPPERCASE"
+      },
+      "formatting": { "fontFamily": "Courier", "fontSize": 9.5, "align": "left", "overflowStrategy": "wrap" }
+    },
+    {
+      "id": "w2_box_e_emp_name",
+      "boxNumber": "Box e",
+      "label": "Employee's first name and initial, Last name",
+      "pageIndex": 1,
+      "category": "IDENTITY",
+      "fieldType": "TEXT",
+      "bounds": { "x": 48, "y": 265, "width": 250, "height": 16 },
+      "dataBinding": {
+        "path": "$.taxpayer.personalInfo.firstName",
+        "transform": "UPPERCASE"
+      },
+      "formatting": { "fontFamily": "Courier", "fontSize": 10, "fontWeight": "bold", "align": "left" }
+    },
+    {
+      "id": "w2_box_f_emp_addr",
+      "boxNumber": "Box f",
+      "label": "Employee's address and ZIP code",
+      "pageIndex": 1,
+      "category": "IDENTITY",
+      "fieldType": "TEXT",
+      "bounds": { "x": 48, "y": 298, "width": 250, "height": 35 },
+      "dataBinding": {
+        "path": "$.taxpayer.address.street",
+        "transform": "UPPERCASE"
+      },
+      "formatting": { "fontFamily": "Courier", "fontSize": 9.5, "align": "left" }
+    },
+    {
+      "id": "w2_box_1_wages",
+      "boxNumber": "Box 1",
+      "label": "Wages, tips, other compensation",
+      "pageIndex": 1,
+      "category": "INCOME",
+      "fieldType": "CURRENCY",
+      "bounds": { "x": 320, "y": 92, "width": 125, "height": 16 },
+      "dataBinding": {
+        "path": "$.income.w2Forms[0].box1Wages",
+        "transform": "CURRENCY_WITH_CENTS"
+      },
+      "formatting": { "fontFamily": "Courier", "fontSize": 10, "fontWeight": "bold", "align": "right" }
+    },
+    {
+      "id": "w2_box_2_fed_tax",
+      "boxNumber": "Box 2",
+      "label": "Federal income tax withheld",
+      "pageIndex": 1,
+      "category": "PAYMENTS",
+      "fieldType": "CURRENCY",
+      "bounds": { "x": 460, "y": 92, "width": 115, "height": 16 },
+      "dataBinding": {
+        "path": "$.income.w2Forms[0].box2FederalTaxWithheld",
+        "transform": "CURRENCY_WITH_CENTS"
+      },
+      "formatting": { "fontFamily": "Courier", "fontSize": 10, "fontWeight": "bold", "align": "right" }
+    },
+    {
+      "id": "w2_box_3_ss_wages",
+      "boxNumber": "Box 3",
+      "label": "Social security wages",
+      "pageIndex": 1,
+      "category": "INCOME",
+      "fieldType": "CURRENCY",
+      "bounds": { "x": 320, "y": 135, "width": 125, "height": 16 },
+      "dataBinding": {
+        "path": "$.income.w2Forms[0].box3SocialSecurityWages",
+        "transform": "CURRENCY_WITH_CENTS"
+      },
+      "formatting": { "fontFamily": "Courier", "fontSize": 10, "align": "right" }
+    },
+    {
+      "id": "w2_box_4_ss_tax",
+      "boxNumber": "Box 4",
+      "label": "Social security tax withheld",
+      "pageIndex": 1,
+      "category": "PAYMENTS",
+      "fieldType": "CURRENCY",
+      "bounds": { "x": 460, "y": 135, "width": 115, "height": 16 },
+      "dataBinding": {
+        "path": "$.income.w2Forms[0].box4SocialSecurityTaxWithheld",
+        "transform": "CURRENCY_WITH_CENTS"
+      },
+      "formatting": { "fontFamily": "Courier", "fontSize": 10, "align": "right" }
+    },
+    {
+      "id": "w2_box_5_med_wages",
+      "boxNumber": "Box 5",
+      "label": "Medicare wages and tips",
+      "pageIndex": 1,
+      "category": "INCOME",
+      "fieldType": "CURRENCY",
+      "bounds": { "x": 320, "y": 178, "width": 125, "height": 16 },
+      "dataBinding": {
+        "path": "$.income.w2Forms[0].box5MedicareWages",
+        "transform": "CURRENCY_WITH_CENTS"
+      },
+      "formatting": { "fontFamily": "Courier", "fontSize": 10, "align": "right" }
+    },
+    {
+      "id": "w2_box_6_med_tax",
+      "boxNumber": "Box 6",
+      "label": "Medicare tax withheld",
+      "pageIndex": 1,
+      "category": "PAYMENTS",
+      "fieldType": "CURRENCY",
+      "bounds": { "x": 460, "y": 178, "width": 115, "height": 16 },
+      "dataBinding": {
+        "path": "$.income.w2Forms[0].box6MedicareTaxWithheld",
+        "transform": "CURRENCY_WITH_CENTS"
+      },
+      "formatting": { "fontFamily": "Courier", "fontSize": 10, "align": "right" }
+    },
+    {
+      "id": "w2_box_12a_code",
+      "boxNumber": "Box 12a Code",
+      "label": "Box 12a Code",
+      "pageIndex": 1,
+      "category": "INCOME",
+      "fieldType": "TEXT",
+      "bounds": { "x": 320, "y": 305, "width": 24, "height": 14 },
+      "dataBinding": {
+        "path": "$.income.w2Forms[0].box12[0].code",
+        "transform": "UPPERCASE"
+      },
+      "formatting": { "fontFamily": "Courier", "fontSize": 9.5, "fontWeight": "bold", "align": "center" }
+    },
+    {
+      "id": "w2_box_12a_amount",
+      "boxNumber": "Box 12a Amount",
+      "label": "Box 12a Amount",
+      "pageIndex": 1,
+      "category": "INCOME",
+      "fieldType": "CURRENCY",
+      "bounds": { "x": 350, "y": 305, "width": 95, "height": 14 },
+      "dataBinding": {
+        "path": "$.income.w2Forms[0].box12[0].amount",
+        "transform": "CURRENCY_WITH_CENTS"
+      },
+      "formatting": { "fontFamily": "Courier", "fontSize": 9.5, "align": "right" }
+    },
+    {
+      "id": "w2_box_15_state",
+      "boxNumber": "Box 15",
+      "label": "State",
+      "pageIndex": 1,
+      "category": "INCOME",
+      "fieldType": "TEXT",
+      "bounds": { "x": 48, "y": 420, "width": 35, "height": 14 },
+      "dataBinding": {
+        "path": "$.income.w2Forms[0].box15State"
+      },
+      "formatting": { "fontFamily": "Courier", "fontSize": 10, "align": "center" }
+    },
+    {
+      "id": "w2_box_16_state_wages",
+      "boxNumber": "Box 16",
+      "label": "State wages, tips, etc.",
+      "pageIndex": 1,
+      "category": "INCOME",
+      "fieldType": "CURRENCY",
+      "bounds": { "x": 220, "y": 420, "width": 110, "height": 14 },
+      "dataBinding": {
+        "path": "$.income.w2Forms[0].box16StateWages",
+        "transform": "CURRENCY_WITH_CENTS"
+      },
+      "formatting": { "fontFamily": "Courier", "fontSize": 10, "align": "right" }
+    },
+    {
+      "id": "w2_box_17_state_tax",
+      "boxNumber": "Box 17",
+      "label": "State income tax",
+      "pageIndex": 1,
+      "category": "PAYMENTS",
+      "fieldType": "CURRENCY",
+      "bounds": { "x": 340, "y": 420, "width": 110, "height": 14 },
+      "dataBinding": {
+        "path": "$.income.w2Forms[0].box17StateTaxWithheld",
+        "transform": "CURRENCY_WITH_CENTS"
+      },
+      "formatting": { "fontFamily": "Courier", "fontSize": 10, "align": "right" }
+    }
+  ]
+}

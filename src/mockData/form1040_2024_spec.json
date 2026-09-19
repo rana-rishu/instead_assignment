@@ -1,0 +1,612 @@
+{
+  "$schema": "https://instead.com/schemas/tax-form-annotation-v1.json",
+  "specVersion": "1.0.0",
+  "formId": "IRS-FORM-1040",
+  "formTitle": "Form 1040: U.S. Individual Income Tax Return",
+  "taxYear": 2024,
+  "revision": "2024-Rev-01",
+  "publisher": "Internal Revenue Service (IRS)",
+  "description": "Standard U.S. Individual Income Tax Return annotation specification covering Page 1 and Page 2.",
+  "pages": [
+    {
+      "pageIndex": 1,
+      "width": 612,
+      "height": 792,
+      "unit": "pt",
+      "dpi": 72,
+      "origin": "top-left",
+      "title": "Page 1 - Personal Info, Filing Status, Dependents & Total Income"
+    },
+    {
+      "pageIndex": 2,
+      "width": 612,
+      "height": 792,
+      "unit": "pt",
+      "dpi": 72,
+      "origin": "top-left",
+      "title": "Page 2 - Tax Calculation, Payments, Refund & Signatures"
+    }
+  ],
+  "fields": [
+    {
+      "id": "f1040_p1_fs_single",
+      "boxNumber": "FS_SINGLE",
+      "label": "Filing Status: Single",
+      "pageIndex": 1,
+      "category": "FILING_STATUS",
+      "fieldType": "RADIO_GROUP",
+      "bounds": { "x": 62, "y": 72, "width": 10, "height": 10 },
+      "dataBinding": {
+        "path": "$.filingStatus",
+        "transform": "NONE"
+      },
+      "checkboxConfig": {
+        "marker": "X",
+        "markerSize": 9,
+        "radioValue": "SINGLE"
+      }
+    },
+    {
+      "id": "f1040_p1_fs_mfj",
+      "boxNumber": "FS_MFJ",
+      "label": "Filing Status: Married Filing Jointly",
+      "pageIndex": 1,
+      "category": "FILING_STATUS",
+      "fieldType": "RADIO_GROUP",
+      "bounds": { "x": 112, "y": 72, "width": 10, "height": 10 },
+      "dataBinding": {
+        "path": "$.filingStatus",
+        "transform": "NONE"
+      },
+      "checkboxConfig": {
+        "marker": "X",
+        "markerSize": 9,
+        "radioValue": "MFJ"
+      }
+    },
+    {
+      "id": "f1040_p1_fs_mfs",
+      "boxNumber": "FS_MFS",
+      "label": "Filing Status: Married Filing Separately",
+      "pageIndex": 1,
+      "category": "FILING_STATUS",
+      "fieldType": "RADIO_GROUP",
+      "bounds": { "x": 236, "y": 72, "width": 10, "height": 10 },
+      "dataBinding": {
+        "path": "$.filingStatus",
+        "transform": "NONE"
+      },
+      "checkboxConfig": {
+        "marker": "X",
+        "markerSize": 9,
+        "radioValue": "MFS"
+      }
+    },
+    {
+      "id": "f1040_p1_fs_hoh",
+      "boxNumber": "FS_HOH",
+      "label": "Filing Status: Head of Household",
+      "pageIndex": 1,
+      "category": "FILING_STATUS",
+      "fieldType": "RADIO_GROUP",
+      "bounds": { "x": 372, "y": 72, "width": 10, "height": 10 },
+      "dataBinding": {
+        "path": "$.filingStatus",
+        "transform": "NONE"
+      },
+      "checkboxConfig": {
+        "marker": "X",
+        "markerSize": 9,
+        "radioValue": "HOH"
+      }
+    },
+    {
+      "id": "f1040_p1_taxpayer_fname",
+      "boxNumber": "TP_FNAME",
+      "label": "Your First Name & Middle Initial",
+      "pageIndex": 1,
+      "category": "IDENTITY",
+      "fieldType": "TEXT",
+      "bounds": { "x": 34, "y": 102, "width": 240, "height": 14 },
+      "dataBinding": {
+        "path": "$.taxpayer.personalInfo.firstName",
+        "transform": "UPPERCASE"
+      },
+      "formatting": {
+        "fontFamily": "Courier",
+        "fontSize": 9.5,
+        "fontWeight": "bold",
+        "align": "left"
+      }
+    },
+    {
+      "id": "f1040_p1_taxpayer_lname",
+      "boxNumber": "TP_LNAME",
+      "label": "Last Name",
+      "pageIndex": 1,
+      "category": "IDENTITY",
+      "fieldType": "TEXT",
+      "bounds": { "x": 280, "y": 102, "width": 180, "height": 14 },
+      "dataBinding": {
+        "path": "$.taxpayer.personalInfo.lastName",
+        "transform": "UPPERCASE"
+      },
+      "formatting": {
+        "fontFamily": "Courier",
+        "fontSize": 9.5,
+        "fontWeight": "bold",
+        "align": "left"
+      }
+    },
+    {
+      "id": "f1040_p1_taxpayer_ssn",
+      "boxNumber": "TP_SSN",
+      "label": "Your Social Security Number",
+      "pageIndex": 1,
+      "category": "IDENTITY",
+      "fieldType": "COMB_TEXT",
+      "bounds": { "x": 476, "y": 102, "width": 106, "height": 14 },
+      "dataBinding": {
+        "path": "$.taxpayer.identity.ssn",
+        "transform": "SSN_UNMASKED_DIGITS"
+      },
+      "formatting": {
+        "fontFamily": "Courier",
+        "fontSize": 10,
+        "fontWeight": "bold"
+      },
+      "combConfig": {
+        "cellCount": 9,
+        "cellWidth": 9.5,
+        "cellGap": 1.2,
+        "groups": [3, 2, 4],
+        "groupGaps": [6.0, 6.0],
+        "delimiter": "-",
+        "characterAlignment": "center"
+      },
+      "validation": {
+        "required": true,
+        "regex": "^\\d{9}$",
+        "errorMessage": "Valid 9-digit SSN is required"
+      }
+    },
+    {
+      "id": "f1040_p1_spouse_fname",
+      "boxNumber": "SP_FNAME",
+      "label": "Spouse First Name & Middle Initial",
+      "pageIndex": 1,
+      "category": "IDENTITY",
+      "fieldType": "TEXT",
+      "bounds": { "x": 34, "y": 126, "width": 240, "height": 14 },
+      "dataBinding": {
+        "path": "$.taxpayer.spouse.personalInfo.firstName",
+        "transform": "UPPERCASE"
+      },
+      "formatting": {
+        "fontFamily": "Courier",
+        "fontSize": 9.5,
+        "align": "left"
+      }
+    },
+    {
+      "id": "f1040_p1_spouse_lname",
+      "boxNumber": "SP_LNAME",
+      "label": "Spouse Last Name",
+      "pageIndex": 1,
+      "category": "IDENTITY",
+      "fieldType": "TEXT",
+      "bounds": { "x": 280, "y": 126, "width": 180, "height": 14 },
+      "dataBinding": {
+        "path": "$.taxpayer.spouse.personalInfo.lastName",
+        "transform": "UPPERCASE"
+      },
+      "formatting": {
+        "fontFamily": "Courier",
+        "fontSize": 9.5,
+        "align": "left"
+      }
+    },
+    {
+      "id": "f1040_p1_spouse_ssn",
+      "boxNumber": "SP_SSN",
+      "label": "Spouse Social Security Number",
+      "pageIndex": 1,
+      "category": "IDENTITY",
+      "fieldType": "COMB_TEXT",
+      "bounds": { "x": 476, "y": 126, "width": 106, "height": 14 },
+      "dataBinding": {
+        "path": "$.taxpayer.spouse.identity.ssn",
+        "transform": "SSN_UNMASKED_DIGITS"
+      },
+      "combConfig": {
+        "cellCount": 9,
+        "cellWidth": 9.5,
+        "cellGap": 1.2,
+        "groups": [3, 2, 4],
+        "groupGaps": [6.0, 6.0],
+        "delimiter": "-"
+      }
+    },
+    {
+      "id": "f1040_p1_home_address",
+      "boxNumber": "ADDR_STREET",
+      "label": "Home Address (number and street)",
+      "pageIndex": 1,
+      "category": "IDENTITY",
+      "fieldType": "TEXT",
+      "bounds": { "x": 34, "y": 150, "width": 426, "height": 14 },
+      "dataBinding": {
+        "path": "$.taxpayer.address.street",
+        "transform": "UPPERCASE"
+      },
+      "formatting": {
+        "fontFamily": "Courier",
+        "fontSize": 9.5,
+        "align": "left"
+      }
+    },
+    {
+      "id": "f1040_p1_apt_no",
+      "boxNumber": "ADDR_APT",
+      "label": "Apt. No.",
+      "pageIndex": 1,
+      "category": "IDENTITY",
+      "fieldType": "TEXT",
+      "bounds": { "x": 476, "y": 150, "width": 106, "height": 14 },
+      "dataBinding": {
+        "path": "$.taxpayer.address.apartment",
+        "transform": "UPPERCASE"
+      },
+      "formatting": {
+        "fontFamily": "Courier",
+        "fontSize": 9.5,
+        "align": "left"
+      }
+    },
+    {
+      "id": "f1040_p1_city_state_zip",
+      "boxNumber": "ADDR_CITY",
+      "label": "City, Town, or Post Office",
+      "pageIndex": 1,
+      "category": "IDENTITY",
+      "fieldType": "TEXT",
+      "bounds": { "x": 34, "y": 174, "width": 260, "height": 14 },
+      "dataBinding": {
+        "path": "$.taxpayer.address.city",
+        "transform": "UPPERCASE"
+      },
+      "formatting": {
+        "fontFamily": "Courier",
+        "fontSize": 9.5,
+        "align": "left"
+      }
+    },
+    {
+      "id": "f1040_p1_state",
+      "boxNumber": "ADDR_STATE",
+      "label": "State",
+      "pageIndex": 1,
+      "category": "IDENTITY",
+      "fieldType": "TEXT",
+      "bounds": { "x": 300, "y": 174, "width": 40, "height": 14 },
+      "dataBinding": {
+        "path": "$.taxpayer.address.state",
+        "transform": "UPPERCASE"
+      },
+      "formatting": {
+        "fontFamily": "Courier",
+        "fontSize": 9.5,
+        "align": "center"
+      }
+    },
+    {
+      "id": "f1040_p1_zip",
+      "boxNumber": "ADDR_ZIP",
+      "label": "ZIP Code",
+      "pageIndex": 1,
+      "category": "IDENTITY",
+      "fieldType": "TEXT",
+      "bounds": { "x": 346, "y": 174, "width": 114, "height": 14 },
+      "dataBinding": {
+        "path": "$.taxpayer.address.zipCode",
+        "transform": "NONE"
+      },
+      "formatting": {
+        "fontFamily": "Courier",
+        "fontSize": 9.5,
+        "align": "left"
+      }
+    },
+    {
+      "id": "f1040_p1_dep1_fname",
+      "boxNumber": "DEP1_FNAME",
+      "label": "Dependent 1: First Name",
+      "pageIndex": 1,
+      "category": "IDENTITY",
+      "fieldType": "TEXT",
+      "bounds": { "x": 34, "y": 242, "width": 130, "height": 12 },
+      "dataBinding": {
+        "path": "$.taxpayer.dependents[0].firstName",
+        "transform": "UPPERCASE"
+      },
+      "formatting": { "fontFamily": "Courier", "fontSize": 8.5, "align": "left" }
+    },
+    {
+      "id": "f1040_p1_dep1_ssn",
+      "boxNumber": "DEP1_SSN",
+      "label": "Dependent 1: SSN",
+      "pageIndex": 1,
+      "category": "IDENTITY",
+      "fieldType": "COMB_TEXT",
+      "bounds": { "x": 240, "y": 242, "width": 96, "height": 12 },
+      "dataBinding": {
+        "path": "$.taxpayer.dependents[0].ssn",
+        "transform": "SSN_UNMASKED_DIGITS"
+      },
+      "combConfig": {
+        "cellCount": 9,
+        "cellWidth": 8.5,
+        "cellGap": 1.0,
+        "groups": [3, 2, 4],
+        "groupGaps": [5.0, 5.0],
+        "delimiter": "-"
+      }
+    },
+    {
+      "id": "f1040_p1_dep1_rel",
+      "boxNumber": "DEP1_REL",
+      "label": "Dependent 1: Relationship",
+      "pageIndex": 1,
+      "category": "IDENTITY",
+      "fieldType": "TEXT",
+      "bounds": { "x": 346, "y": 242, "width": 90, "height": 12 },
+      "dataBinding": {
+        "path": "$.taxpayer.dependents[0].relationship",
+        "transform": "UPPERCASE"
+      },
+      "formatting": { "fontFamily": "Courier", "fontSize": 8.5, "align": "left" }
+    },
+    {
+      "id": "f1040_p1_dep1_ctc",
+      "boxNumber": "DEP1_CTC",
+      "label": "Dependent 1: Child Tax Credit",
+      "pageIndex": 1,
+      "category": "TAX_AND_CREDITS",
+      "fieldType": "CHECKBOX",
+      "bounds": { "x": 482, "y": 242, "width": 10, "height": 10 },
+      "dataBinding": {
+        "path": "$.taxpayer.dependents[0].qualifiesForChildTaxCredit",
+        "transform": "BOOLEAN_TO_X"
+      },
+      "checkboxConfig": { "marker": "X", "markerSize": 8.5 }
+    },
+    {
+      "id": "f1040_p1_line1a_wages",
+      "boxNumber": "Line 1a",
+      "label": "Total amount from Form(s) W-2, box 1",
+      "pageIndex": 1,
+      "category": "INCOME",
+      "fieldType": "CURRENCY",
+      "bounds": { "x": 460, "y": 322, "width": 120, "height": 13 },
+      "dataBinding": {
+        "path": "$.income.w2TotalWages",
+        "transform": "CURRENCY_NO_CENTS"
+      },
+      "formatting": { "fontFamily": "Courier", "fontSize": 9.5, "fontWeight": "bold", "align": "right" },
+      "currencyConfig": { "includeSymbol": false, "includeDecimals": false, "negativeFormat": "PARENTHESES" }
+    },
+    {
+      "id": "f1040_p1_line1z_totalwages",
+      "boxNumber": "Line 1z",
+      "label": "Add lines 1a through 1h",
+      "pageIndex": 1,
+      "category": "INCOME",
+      "fieldType": "CURRENCY",
+      "bounds": { "x": 460, "y": 344, "width": 120, "height": 13 },
+      "dataBinding": {
+        "path": "$.income.w2TotalWages",
+        "transform": "CURRENCY_NO_CENTS"
+      },
+      "formatting": { "fontFamily": "Courier", "fontSize": 9.5, "fontWeight": "bold", "align": "right" }
+    },
+    {
+      "id": "f1040_p1_line2b_taxable_interest",
+      "boxNumber": "Line 2b",
+      "label": "Taxable interest",
+      "pageIndex": 1,
+      "category": "INCOME",
+      "fieldType": "CURRENCY",
+      "bounds": { "x": 460, "y": 366, "width": 120, "height": 13 },
+      "dataBinding": {
+        "path": "$.income.taxableInterest",
+        "transform": "CURRENCY_NO_CENTS"
+      },
+      "formatting": { "fontFamily": "Courier", "fontSize": 9.5, "align": "right" }
+    },
+    {
+      "id": "f1040_p1_line3b_ordinary_dividends",
+      "boxNumber": "Line 3b",
+      "label": "Ordinary dividends",
+      "pageIndex": 1,
+      "category": "INCOME",
+      "fieldType": "CURRENCY",
+      "bounds": { "x": 460, "y": 388, "width": 120, "height": 13 },
+      "dataBinding": {
+        "path": "$.income.ordinaryDividends",
+        "transform": "CURRENCY_NO_CENTS"
+      },
+      "formatting": { "fontFamily": "Courier", "fontSize": 9.5, "align": "right" }
+    },
+    {
+      "id": "f1040_p1_line9_total_income",
+      "boxNumber": "Line 9",
+      "label": "Total income (add lines 1z, 2b, 3b, 4b, 5b, 6b, 7, and 8)",
+      "pageIndex": 1,
+      "category": "INCOME",
+      "fieldType": "CURRENCY",
+      "bounds": { "x": 460, "y": 480, "width": 120, "height": 14 },
+      "dataBinding": {
+        "path": "$.income.totalIncomeLine9",
+        "transform": "CURRENCY_NO_CENTS"
+      },
+      "formatting": { "fontFamily": "Courier", "fontSize": 10, "fontWeight": "bold", "align": "right" }
+    },
+    {
+      "id": "f1040_p2_line12_standard_deduction",
+      "boxNumber": "Line 12",
+      "label": "Standard deduction or itemized deductions",
+      "pageIndex": 2,
+      "category": "DEDUCTIONS",
+      "fieldType": "CURRENCY",
+      "bounds": { "x": 460, "y": 80, "width": 120, "height": 13 },
+      "dataBinding": {
+        "path": "$.deductions.standardDeduction",
+        "transform": "CURRENCY_NO_CENTS"
+      },
+      "formatting": { "fontFamily": "Courier", "fontSize": 9.5, "align": "right" }
+    },
+    {
+      "id": "f1040_p2_line15_taxable_income",
+      "boxNumber": "Line 15",
+      "label": "Taxable income (subtract line 14 from line 11)",
+      "pageIndex": 2,
+      "category": "INCOME",
+      "fieldType": "CURRENCY",
+      "bounds": { "x": 460, "y": 128, "width": 120, "height": 14 },
+      "dataBinding": {
+        "path": "$.taxCalculation.taxableIncomeLine15",
+        "transform": "CURRENCY_NO_CENTS"
+      },
+      "formatting": { "fontFamily": "Courier", "fontSize": 10, "fontWeight": "bold", "align": "right" }
+    },
+    {
+      "id": "f1040_p2_line16_tax",
+      "boxNumber": "Line 16",
+      "label": "Tax amount (from Tax Tables or Schedule D)",
+      "pageIndex": 2,
+      "category": "TAX_AND_CREDITS",
+      "fieldType": "CURRENCY",
+      "bounds": { "x": 460, "y": 150, "width": 120, "height": 13 },
+      "dataBinding": {
+        "path": "$.taxCalculation.tentativeTaxLine16",
+        "transform": "CURRENCY_NO_CENTS"
+      },
+      "formatting": { "fontFamily": "Courier", "fontSize": 9.5, "align": "right" }
+    },
+    {
+      "id": "f1040_p2_line24_total_tax",
+      "boxNumber": "Line 24",
+      "label": "Total tax (add lines 22 and 23)",
+      "pageIndex": 2,
+      "category": "TAX_AND_CREDITS",
+      "fieldType": "CURRENCY",
+      "bounds": { "x": 460, "y": 240, "width": 120, "height": 14 },
+      "dataBinding": {
+        "path": "$.taxCalculation.totalTaxLine24",
+        "transform": "CURRENCY_NO_CENTS"
+      },
+      "formatting": { "fontFamily": "Courier", "fontSize": 10, "fontWeight": "bold", "align": "right" }
+    },
+    {
+      "id": "f1040_p2_line25d_total_withholding",
+      "boxNumber": "Line 25d",
+      "label": "Total Federal income tax withheld",
+      "pageIndex": 2,
+      "category": "PAYMENTS",
+      "fieldType": "CURRENCY",
+      "bounds": { "x": 460, "y": 305, "width": 120, "height": 13 },
+      "dataBinding": {
+        "path": "$.taxCalculation.totalFederalWithholdingLine25d",
+        "transform": "CURRENCY_NO_CENTS"
+      },
+      "formatting": { "fontFamily": "Courier", "fontSize": 9.5, "align": "right" }
+    },
+    {
+      "id": "f1040_p2_line34_overpaid",
+      "boxNumber": "Line 34",
+      "label": "Amount overpaid (line 33 minus line 24)",
+      "pageIndex": 2,
+      "category": "REFUND",
+      "fieldType": "CURRENCY",
+      "bounds": { "x": 460, "y": 390, "width": 120, "height": 14 },
+      "dataBinding": {
+        "path": "$.taxCalculation.overpaidAmountLine34",
+        "transform": "CURRENCY_NO_CENTS"
+      },
+      "formatting": { "fontFamily": "Courier", "fontSize": 10, "fontWeight": "bold", "align": "right" }
+    },
+    {
+      "id": "f1040_p2_line35a_refund",
+      "boxNumber": "Line 35a",
+      "label": "Amount of line 34 you want refunded to you",
+      "pageIndex": 2,
+      "category": "REFUND",
+      "fieldType": "CURRENCY",
+      "bounds": { "x": 460, "y": 414, "width": 120, "height": 14 },
+      "dataBinding": {
+        "path": "$.taxCalculation.refundAmountLine35a",
+        "transform": "CURRENCY_NO_CENTS"
+      },
+      "formatting": { "fontFamily": "Courier", "fontSize": 10, "fontWeight": "bold", "align": "right" }
+    },
+    {
+      "id": "f1040_p2_routing_no",
+      "boxNumber": "Line 35b",
+      "label": "Routing number",
+      "pageIndex": 2,
+      "category": "REFUND",
+      "fieldType": "COMB_TEXT",
+      "bounds": { "x": 160, "y": 442, "width": 110, "height": 13 },
+      "dataBinding": {
+        "path": "$.taxCalculation.directDeposit.routingNumber",
+        "transform": "NONE"
+      },
+      "combConfig": {
+        "cellCount": 9,
+        "cellWidth": 11.5,
+        "cellGap": 1.0,
+        "characterAlignment": "center"
+      }
+    },
+    {
+      "id": "f1040_p2_acct_type_chk",
+      "boxNumber": "Line 35c_CHK",
+      "label": "Type: Checking",
+      "pageIndex": 2,
+      "category": "REFUND",
+      "fieldType": "RADIO_GROUP",
+      "bounds": { "x": 286, "y": 444, "width": 9, "height": 9 },
+      "dataBinding": {
+        "path": "$.taxCalculation.directDeposit.accountType"
+      },
+      "checkboxConfig": { "marker": "X", "radioValue": "CHECKING" }
+    },
+    {
+      "id": "f1040_p2_account_no",
+      "boxNumber": "Line 35d",
+      "label": "Account number",
+      "pageIndex": 2,
+      "category": "REFUND",
+      "fieldType": "TEXT",
+      "bounds": { "x": 372, "y": 442, "width": 180, "height": 13 },
+      "dataBinding": {
+        "path": "$.taxCalculation.directDeposit.accountNumber",
+        "transform": "NONE"
+      },
+      "formatting": { "fontFamily": "Courier", "fontSize": 9.5, "align": "left" }
+    },
+    {
+      "id": "f1040_p2_preparer_ptin",
+      "boxNumber": "PREP_PTIN",
+      "label": "Paid Preparer PTIN",
+      "pageIndex": 2,
+      "category": "PREPARER",
+      "fieldType": "COMB_TEXT",
+      "bounds": { "x": 472, "y": 648, "width": 100, "height": 13 },
+      "dataBinding": {
+        "path": "$.preparer.ptin"
+      },
+      "combConfig": { "cellCount": 9, "cellWidth": 10.5, "cellGap": 1.0 }
+    }
+  ]
+}

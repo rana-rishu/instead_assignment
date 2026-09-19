@@ -1,0 +1,175 @@
+{
+  "returnYear": 2024,
+  "filingStatus": "MFJ",
+  "taxpayer": {
+    "identity": {
+      "ssn": "123456789",
+      "tin": "123456789",
+      "ipPin": "987654"
+    },
+    "personalInfo": {
+      "firstName": "Alex",
+      "middleInitial": "M",
+      "lastName": "Rivera",
+      "occupation": "Senior Software Architect",
+      "dateOfBirth": "1988-04-14",
+      "phone": "4155552349",
+      "email": "alex.rivera@example.com"
+    },
+    "address": {
+      "street": "742 Evergreen Terrace",
+      "apartment": "Suite 4B",
+      "city": "San Francisco",
+      "state": "CA",
+      "zipCode": "94107",
+      "foreignCountry": "",
+      "foreignProvince": "",
+      "foreignPostal": ""
+    },
+    "spouse": {
+      "identity": {
+        "ssn": "987654321"
+      },
+      "personalInfo": {
+        "firstName": "Jordan",
+        "middleInitial": "L",
+        "lastName": "Rivera",
+        "occupation": "Product Design Director",
+        "dateOfBirth": "1990-11-22"
+      }
+    },
+    "dependents": [
+      {
+        "firstName": "Liam",
+        "lastName": "Rivera",
+        "ssn": "456781234",
+        "relationship": "Son",
+        "qualifiesForChildTaxCredit": true,
+        "qualifiesForOtherDependentCredit": false
+      },
+      {
+        "firstName": "Maya",
+        "lastName": "Rivera",
+        "ssn": "789123456",
+        "relationship": "Daughter",
+        "qualifiesForChildTaxCredit": true,
+        "qualifiesForOtherDependentCredit": false
+      }
+    ]
+  },
+  "income": {
+    "w2Forms": [
+      {
+        "employer": {
+          "ein": "94-1234567",
+          "name": "Acme Cloud Infrastructure Inc.",
+          "address": "100 Market St, San Francisco, CA 94105"
+        },
+        "employeeSsn": "123456789",
+        "box1Wages": 185450.00,
+        "box2FederalTaxWithheld": 38240.00,
+        "box3SocialSecurityWages": 168600.00,
+        "box4SocialSecurityTaxWithheld": 10453.20,
+        "box5MedicareWages": 185450.00,
+        "box6MedicareTaxWithheld": 2689.03,
+        "box12": [
+          { "code": "D", "amount": 23000.00, "description": "401(k) Elective Deferrals" },
+          { "code": "W", "amount": 3850.00, "description": "HSA Contributions" }
+        ],
+        "box15State": "CA",
+        "box16StateWages": 185450.00,
+        "box17StateTaxWithheld": 15420.00
+      },
+      {
+        "employer": {
+          "ein": "88-7654321",
+          "name": "Horizon Studio Labs LLC",
+          "address": "500 Howard St, San Francisco, CA 94105"
+        },
+        "employeeSsn": "987654321",
+        "box1Wages": 142000.00,
+        "box2FederalTaxWithheld": 26800.00,
+        "box3SocialSecurityWages": 142000.00,
+        "box4SocialSecurityTaxWithheld": 8804.00,
+        "box5MedicareWages": 142000.00,
+        "box6MedicareTaxWithheld": 2059.00,
+        "box12": [
+          { "code": "D", "amount": 22500.00, "description": "401(k) Elective Deferrals" }
+        ],
+        "box15State": "CA",
+        "box16StateWages": 142000.00,
+        "box17StateTaxWithheld": 11300.00
+      }
+    ],
+    "w2TotalWages": 327450.00,
+    "taxableInterest": 2840.00,
+    "ordinaryDividends": 4500.00,
+    "qualifiedDividends": 3950.00,
+    "capitalGains": 12800.00,
+    "totalIncomeLine9": 347590.00
+  },
+  "businessScheduleC": {
+    "businessName": "Rivera Tech Consulting & Architecture",
+    "principalActivity": "Software & System Architecture Consulting",
+    "businessCode": "541512",
+    "ein": "27-9876543",
+    "grossReceipts": 48500.00,
+    "returnsAndAllowances": 0.00,
+    "costOfGoodsSold": 0.00,
+    "expenses": {
+      "advertising": 1200.00,
+      "carAndTruck": 2450.00,
+      "commissions": 0.00,
+      "contractLabor": 6500.00,
+      "depreciation": 1800.00,
+      "legalAndProfessional": 2200.00,
+      "officeExpense": 1450.00,
+      "travel": 3100.00,
+      "meals": 1150.00,
+      "utilitiesAndInternet": 1600.00,
+      "softwareAndSaaS": 3800.00,
+      "totalExpenses": 25250.00
+    },
+    "netProfitOrLoss": 23250.00
+  },
+  "nonemployee1099Nec": [
+    {
+      "payer": {
+        "tin": "11-2233445",
+        "name": "Apex AI Ventures",
+        "address": "400 Pine St, San Francisco, CA"
+      },
+      "recipientTin": "123456789",
+      "recipientName": "Alex Rivera",
+      "box1NonemployeeCompensation": 48500.00,
+      "box4FederalIncomeTaxWithheld": 0.00
+    }
+  ],
+  "deductions": {
+    "standardDeduction": 29200.00,
+    "qualifiedBusinessIncomeDeduction": 4650.00,
+    "totalDeductionsLine14": 33850.00
+  },
+  "taxCalculation": {
+    "taxableIncomeLine15": 313740.00,
+    "tentativeTaxLine16": 62450.00,
+    "childTaxCredit": 4000.00,
+    "totalTaxLine24": 58450.00,
+    "totalFederalWithholdingLine25d": 65040.00,
+    "overpaidAmountLine34": 6590.00,
+    "refundAmountLine35a": 6590.00,
+    "directDeposit": {
+      "routingNumber": "121000358",
+      "accountNumber": "987654321012",
+      "accountType": "CHECKING"
+    }
+  },
+  "preparer": {
+    "name": "Jane Doe, CPA",
+    "firm": "Instead Pro Tax Advisors LLP",
+    "ptin": "P01234567",
+    "ein": "13-5792468",
+    "phone": "8005550199",
+    "date": "2025-04-10"
+  }
+}
