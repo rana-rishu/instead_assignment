@@ -16,12 +16,14 @@ export function App() {
   const [currentPageIndex, setCurrentPageIndex] = useState<number>(1);
   const [selectedFieldId, setSelectedFieldId] = useState<string | null>(null);
   const [dataset, setDataset] = useState<any>(SAMPLE_TAXPAYER_DATA);
-  const [zoom, setZoom] = useState<number>(1.05);
+  const [zoom, setZoom] = useState<number>(0.85);
   const [mode, setMode] = useState<'edit' | 'preview'>('edit');
   const [isDataDrawerOpen, setIsDataDrawerOpen] = useState<boolean>(false);
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState<boolean>(false);
   const [pdfPreviewUrl, setPdfPreviewUrl] = useState<string | null>(null);
   const [isPdfPreviewOpen, setIsPdfPreviewOpen] = useState<boolean>(false);
+  const [isLeftSidebarOpen, setIsLeftSidebarOpen] = useState<boolean>(true);
+  const [isRightSidebarOpen, setIsRightSidebarOpen] = useState<boolean>(true);
 
   const currentSpec = useMemo(() => {
     return specs[currentFormId] || Object.values(specs)[0];
@@ -248,19 +250,25 @@ export function App() {
         onDirectPrint={handleDirectPrint}
         onExportSpec={handleExportSpec}
         dataBindingCount={dataBindingCount}
+        isLeftSidebarOpen={isLeftSidebarOpen}
+        onToggleLeftSidebar={() => setIsLeftSidebarOpen((prev) => !prev)}
+        isRightSidebarOpen={isRightSidebarOpen}
+        onToggleRightSidebar={() => setIsRightSidebarOpen((prev) => !prev)}
       />
 
       {/* Main Studio Area */}
       <div className="flex-1 flex overflow-hidden relative z-10">
         {/* Left Sidebar: Field List */}
-        <FieldListSidebar
-          spec={currentSpec}
-          currentPageIndex={currentPageIndex}
-          selectedFieldId={selectedFieldId}
-          onSelectField={setSelectedFieldId}
-          onAddNewField={handleAddNewField}
-          dataset={dataset}
-        />
+        {isLeftSidebarOpen && (
+          <FieldListSidebar
+            spec={currentSpec}
+            currentPageIndex={currentPageIndex}
+            selectedFieldId={selectedFieldId}
+            onSelectField={setSelectedFieldId}
+            onAddNewField={handleAddNewField}
+            dataset={dataset}
+          />
+        )}
 
         {/* Center: Interactive Form Canvas */}
         <CanvasAnnotator
@@ -275,14 +283,16 @@ export function App() {
         />
 
         {/* Right Sidebar: Field Inspector */}
-        <FieldInspector
-          field={selectedField}
-          onUpdateField={handleUpdateField}
-          onDeleteField={handleDeleteField}
-          onDuplicateField={handleDuplicateField}
-          dataset={dataset}
-          availablePaths={availablePaths}
-        />
+        {isRightSidebarOpen && (
+          <FieldInspector
+            field={selectedField}
+            onUpdateField={handleUpdateField}
+            onDeleteField={handleDeleteField}
+            onDuplicateField={handleDuplicateField}
+            dataset={dataset}
+            availablePaths={availablePaths}
+          />
+        )}
       </div>
 
       {/* Bottom Nested Data Drawer */}

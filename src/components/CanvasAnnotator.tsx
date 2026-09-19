@@ -144,12 +144,12 @@ export const CanvasAnnotator: React.FC<CanvasAnnotatorProps> = ({
 
   return (
     <div
-      className="flex-1 bg-studio-workspace relative overflow-auto flex items-center justify-center p-8 select-none"
+      className="flex-1 bg-studio-workspace relative overflow-auto select-none p-4 md:p-8"
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
     >
       {/* Precision Coordinates HUD */}
-      <div className="absolute bottom-4 left-6 z-20 bg-[#121215] border border-[#27272a] px-3 py-1.5 rounded text-[11px] font-mono text-zinc-400 flex items-center gap-3 shadow-panel">
+      <div className="fixed md:absolute bottom-4 left-6 z-20 bg-[#121215]/95 backdrop-blur border border-[#27272a] px-3 py-1.5 rounded text-[11px] font-mono text-zinc-400 flex items-center gap-3 shadow-panel">
         <span>X: <strong className="text-zinc-200">{cursorPos.x}</strong></span>
         <span>Y: <strong className="text-zinc-200">{cursorPos.y}</strong> pt</span>
         <span className="text-zinc-600">|</span>
@@ -158,18 +158,19 @@ export const CanvasAnnotator: React.FC<CanvasAnnotatorProps> = ({
         <span className="text-coffee-text">{pageFields.length} boxes</span>
       </div>
 
-      {/* Form Canvas Sheet */}
-      <div
-        ref={canvasRef}
-        onMouseDown={handleCanvasMouseDown}
-        style={{
-          width: currentPage.width * zoom,
-          height: currentPage.height * zoom,
-          minWidth: currentPage.width * zoom,
-          minHeight: currentPage.height * zoom,
-        }}
-        className="relative bg-white shadow-sheet rounded-[1px] transition-all duration-75 overflow-hidden cursor-default ring-1 ring-zinc-800"
-      >
+      {/* Form Canvas Sheet Wrapper */}
+      <div className="min-w-fit min-h-fit flex items-center justify-center p-4">
+        <div
+          ref={canvasRef}
+          onMouseDown={handleCanvasMouseDown}
+          style={{
+            width: currentPage.width * zoom,
+            height: currentPage.height * zoom,
+            minWidth: currentPage.width * zoom,
+            minHeight: currentPage.height * zoom,
+          }}
+          className="relative bg-white shadow-sheet rounded-[1px] transition-all duration-75 overflow-hidden cursor-default ring-1 ring-zinc-800 m-auto"
+        >
         {/* Layer 1: Vector IRS SVG Template */}
         <div
           className="absolute inset-0 pointer-events-none [&>svg]:w-full [&>svg]:h-full [&>svg]:block"
@@ -301,6 +302,7 @@ export const CanvasAnnotator: React.FC<CanvasAnnotatorProps> = ({
             </div>
           );
         })}
+        </div>
       </div>
     </div>
   );

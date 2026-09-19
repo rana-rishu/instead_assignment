@@ -9,6 +9,8 @@ import {
   Database, 
   ChevronDown,
   Search,
+  PanelLeft,
+  PanelRight,
 } from 'lucide-react';
 import { FormAnnotationSpec } from '../types/annotation';
 import { Button } from './ui/Button';
@@ -30,6 +32,10 @@ interface NavbarProps {
   onDirectPrint: () => Promise<void>;
   onExportSpec: () => void;
   dataBindingCount: { bound: number; total: number };
+  isLeftSidebarOpen: boolean;
+  onToggleLeftSidebar: () => void;
+  isRightSidebarOpen: boolean;
+  onToggleRightSidebar: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -47,6 +53,10 @@ export const Navbar: React.FC<NavbarProps> = ({
   onDirectPrint,
   onExportSpec,
   dataBindingCount,
+  isLeftSidebarOpen,
+  onToggleLeftSidebar,
+  isRightSidebarOpen,
+  onToggleRightSidebar,
 }) => {
   const [isPrinting, setIsPrinting] = useState(false);
 
@@ -93,7 +103,20 @@ export const Navbar: React.FC<NavbarProps> = ({
           </kbd>
         </button>
 
-        <div className="h-4 w-px bg-zinc-800 hidden md:block" />
+        {/* Left Sidebar Toggle */}
+        <Tooltip content={isLeftSidebarOpen ? "Collapse Field List" : "Expand Field List"}>
+          <button
+            onClick={onToggleLeftSidebar}
+            className={`p-1.5 rounded-lg border transition-colors ${
+              isLeftSidebarOpen
+                ? 'bg-zinc-850 text-white border-zinc-700'
+                : 'bg-zinc-900 text-zinc-400 hover:text-white border-zinc-800'
+            }`}
+            aria-label="Toggle Left Sidebar"
+          >
+            <PanelLeft className="w-3.5 h-3.5" />
+          </button>
+        </Tooltip>
 
         {/* Form Selector */}
         <div className="flex items-center gap-2">
@@ -231,6 +254,21 @@ export const Navbar: React.FC<NavbarProps> = ({
         >
           <span>Print PDF</span>
         </Button>
+
+        {/* Right Sidebar Toggle */}
+        <Tooltip content={isRightSidebarOpen ? "Collapse Inspector" : "Expand Inspector"}>
+          <button
+            onClick={onToggleRightSidebar}
+            className={`p-1.5 rounded-lg border transition-colors ${
+              isRightSidebarOpen
+                ? 'bg-zinc-850 text-white border-zinc-700'
+                : 'bg-zinc-900 text-zinc-400 hover:text-white border-zinc-800'
+            }`}
+            aria-label="Toggle Right Sidebar"
+          >
+            <PanelRight className="w-3.5 h-3.5" />
+          </button>
+        </Tooltip>
 
         {/* User Avatar */}
         <div className="flex items-center pl-2 border-l border-zinc-800">
