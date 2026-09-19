@@ -7,6 +7,7 @@ import { CanvasAnnotator } from './components/CanvasAnnotator';
 import { FieldInspector } from './components/FieldInspector';
 import { NestedDataDrawer } from './components/NestedDataDrawer';
 import { CommandPalette } from './components/ui/CommandPalette';
+import { PdfPreviewDialog } from './components/PdfPreviewDialog';
 import { generateTaxFormPdf } from './engine/printOverlayEngine';
 
 export function App() {
@@ -19,6 +20,8 @@ export function App() {
   const [mode, setMode] = useState<'edit' | 'preview'>('edit');
   const [isDataDrawerOpen, setIsDataDrawerOpen] = useState<boolean>(false);
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState<boolean>(false);
+  const [pdfPreviewUrl, setPdfPreviewUrl] = useState<string | null>(null);
+  const [isPdfPreviewOpen, setIsPdfPreviewOpen] = useState<boolean>(false);
 
   const currentSpec = useMemo(() => {
     return specs[currentFormId] || Object.values(specs)[0];
@@ -192,15 +195,13 @@ export function App() {
         includeBackground: true,
       });
 
+      // Generate Data URL for in-app preview
+      const dataUri = doc.output('datauristring');
+      setPdfPreviewUrl(dataUri);
+      setIsPdfPreviewOpen(true);
+
       // Save PDF file to downloads
       doc.save(`${currentSpec.formId}_${currentSpec.taxYear}_Filled.pdf`);
-
-      // Open print window directly
-      const blobUrl = doc.output('bloburl');
-      const printWindow = window.open(blobUrl as unknown as string, '_blank');
-      if (printWindow) {
-        printWindow.focus();
-      }
     } catch (err: any) {
       alert(`Error generating PDF: ${err.message}`);
     }
@@ -302,6 +303,29 @@ export function App() {
         onExportSpec={handleExportSpec}
         isLiveDataMode={mode === 'preview'}
         onToggleLiveData={() => setMode((prev) => (prev === 'edit' ? 'preview' : 'edit'))}
+      />
+
+      {/* In-App Vector PDF Viewer Dialog */}
+      <PdfPreviewDialog
+        isOpen={isPdfPreviewOpen}
+        onClose={() => setIsPdfPreviewOpen(false)}
+        pdfDataUrl={pdfPreviewUrl}
+        formId={currentSpec.formId}
+        taxYear={currentSpec.taxYear}
+        onDownload={() => {
+          if (pdfPreviewUrl) {
+            const a = document.createElement('a');
+            a.href = pdfPreviewUrl;
+            a.download = `${currentSpec.formId}_${currentSpec.taxYear}_Filled.pdf`;
+            a.click();
+          }
+        }}
+        onDirectPrint={() => {
+          if (pdfPreviewUrl) {
+            const printWindow = window.open(pdfPreviewUrl, '_blank');
+            if (printWindow) printWindow.focus();
+          }
+        }}
       />
     </div>
   );
