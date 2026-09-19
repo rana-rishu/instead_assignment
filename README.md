@@ -6,6 +6,8 @@
 
 Built for the **Instead Technical Assessment** submission to `jaitee.wazalwar@instead.com`.
 
+**🌐 Live Demo:** [https://instead-swart.vercel.app](https://instead-swart.vercel.app)
+
 ---
 
 ## 📖 Complete Documentation
